@@ -23,14 +23,9 @@ def set_up(browser):
     page.close()
 
 
-@pytest.fixture(scope="session")
-def context_creation(playwright):
-
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    page.goto("https://symonstorozhenko.wixsite.com/website-1")
-    page.set_default_timeout(5000)
+@pytest.fixture(scope="function")
+def login_set_up(set_up):
+    page = set_up
 
     page.wait_for_load_state("domcontentloaded", timeout=7000)
 
@@ -54,10 +49,8 @@ def context_creation(playwright):
     page.fill("input[type=\"password\"]", PASSWORD)
 
     page.click("[data-testid=\"submit\"] [data-testid=\"buttonElement\"]")
-    page.wait_for_load_state(timeout=10000)
-    time.sleep(2)
-    context.storage_state(path='state.json')
-    yield context
+
+    yield page
 
 
 @pytest.fixture
@@ -68,15 +61,3 @@ def go_to_new_collection_page(page):
     page.set_default_timeout(5000)
 
     yield page
-
-
-@pytest.fixture
-def login_set_up(context_creation, browser):
-    context = browser.new_context(storage_state='state.json')
-    page = context.new_page()
-    page.goto("https://symonstorozhenko.wixsite.com/website-1")
-    page.set_default_timeout(5000)
-    assert not page.is_visible("text=Log In")
-    yield page
-    context.close()
-

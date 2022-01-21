@@ -3,11 +3,13 @@ import time
 
 import pytest
 
-try:
-    PASSWORD = os.environ['PASSWORD']
-except KeyError:
-    import utils.secret_config
-    PASSWORD = utils.secret_config.PASSWORD
+PASSWORD = os.environ['PASSWORD']
+
+# try:
+#     PASSWORD = os.environ['PASSWORD']
+# except KeyError:
+#     import utils.secret_config
+#     PASSWORD = utils.secret_config.PASSWORD
 
 
 @pytest.mark.regression
