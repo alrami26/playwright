@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+utils/secret_config.py
 build/
 develop-eggs/
 dist/
@@ -128,5 +129,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Custom
-/utils/secret_config.py
+
+
