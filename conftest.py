@@ -1,6 +1,13 @@
+import os
 import time
 
 import pytest
+
+try:
+    PASSWORD = os.environ['PASSWORD']
+except KeyError:
+    import utils.secret_config
+    PASSWORD = utils.secret_config.PASSWORD
 
 
 @pytest.fixture(scope="function")
@@ -39,7 +46,7 @@ def login_set_up(set_up):
 
     page.press("[data-testid=\"siteMembers\\.container\"] input[type=\"email\"]", "Tab")
 
-    page.fill("input[type=\"password\"]", "Con#123")
+    page.fill("input[type=\"password\"]", PASSWORD)
 
     page.click("[data-testid=\"submit\"] [data-testid=\"buttonElement\"]")
 

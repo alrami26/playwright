@@ -3,11 +3,17 @@ import time
 
 import pytest
 
+try:
+    PASSWORD = os.environ['PASSWORD']
+except KeyError:
+    import utils.secret_config
+    PASSWORD = utils.secret_config.PASSWORD
+
 
 @pytest.mark.regression
 @pytest.mark.parametrize("email", ["alrami_26@hotmail.com",
                                     pytest.param("fame@mail.com", marks=pytest.mark.xfail)])
-@pytest.mark.parametrize("pwd", [os.environ['PASSWORD'], #utils.secret_config.PASSWORD
+@pytest.mark.parametrize("pwd", [PASSWORD, #utils.secret_config.PASSWORD
                                     pytest.param("masss", marks=pytest.mark.xfail)])
 def test_login(set_up, email, pwd) -> None:
 
