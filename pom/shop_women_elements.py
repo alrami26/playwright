@@ -1,0 +1,2 @@
+class ShopWomen:
+    pass
